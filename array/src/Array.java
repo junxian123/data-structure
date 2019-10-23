@@ -1,13 +1,16 @@
 /**
  * 二次封装数组
  */
-public class Array {
-    private int[] data;
+public class Array<E> {
+    private E[] data;
     // 数组实际大小
     private int size;
 
     public Array(int capacity) {
-        data = new int[capacity];
+        if(capacity < 1) {
+            throw new IllegalArgumentException("create array failed. this capacity must greater than 0");
+        }
+        data = (E[])new Object[capacity];
         size = 0;
     }
 
@@ -49,39 +52,156 @@ public class Array {
 
     /**
      * 首插入
-     * @param item
+     * @param e
      */
-    public void unshift(int item) {
-        add(0,item);
+    public void unshift(E e) {
+        add(0,e);
     }
 
     /**
      * 尾插入
-     * @param item
+     * @param e
      */
-    public void push(int item) {
-        add(size,item);
+    public void push(E e) {
+        add(size,e);
     }
 
     /**
      * 指定数组下标插入
      * @param index
-     * @param item
+     * @param e
      */
-    public void add(int index, int item) {
+    public void add(int index, E e) {
+
         if(isFull()) {
-            throw new ArrayIndexOutOfBoundsException("the array is full");
+            resize(2*data.length);
         }
 
         if(index<0 || index>size) {
-            throw new IllegalArgumentException("the index illegal");
+            throw new IllegalArgumentException("add failed. the index illegal");
         }
 
         for (int i = size-1; i>=index; i--) {
             data[i+1] = data[i];
         }
-        data[index] = item;
+        data[index] = e;
         size++;
     }
 
+    /**
+     * 获取元素
+     * @param index
+     * @return
+     */
+    public E get(int index) {
+        if(index<0 || index>size) {
+            throw new IllegalArgumentException("get failed. the index illegal");
+        }
+        return data[index];
+    }
+
+    /**
+     * 修改元素
+     * @param index
+     * @param e
+     */
+    public void set(int index,E e){
+        if(index<0 || index>size) {
+            throw new IllegalArgumentException("set failed. the index illegal");
+        }
+        data[index] = e;
+    }
+
+    /**
+     * 数组是否包含元素
+     * @param e
+     * @return
+     */
+    public boolean contains(E e){
+        for (int i = 0; i < size; i++) {
+            if(data[i].equals(e)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 获取指定元素下标
+     * @param e
+     * @return
+     */
+    public int findIndex(E e) {
+        for (int i = 0; i < size; i++) {
+            if(data[i].equals(e)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 删除元素
+     * @param index
+     * @return
+     */
+    public E remove(int index) {
+        if(index<0 || index >= size) {
+            throw new IllegalArgumentException("remove failed. the index illegal");
+        }
+
+        E res = data[index];
+        for (int i = index+1; i < size; i++) {
+            data[i-1] = data[i];
+        }
+        size --;
+        data[size] = null;
+
+        if(size == data.length/4 && data.length/2 != 0) {
+            resize(data.length/2);
+        }
+        return res;
+    }
+
+    /**
+     * 首删除
+     * @return
+     */
+    public E shift() {
+        return remove(0);
+    }
+
+    /**
+     * 尾删除
+     * @return
+     */
+    public E pop() {
+        return remove(size-1);
+    }
+
+    /**
+     * 动态数组
+     */
+    public void resize(int capacity) {
+        E[] dataArray = (E[])new Object[capacity];
+        for (int i = 0; i < size; i++) {
+            dataArray[i] = data[i];
+        }
+        data = dataArray;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Array:size=%d,capacity=%d\n",size,data.length));
+        sb.append("[");
+        for (int i = 0; i < size; i++) {
+            sb.append(data[i].toString());
+            if(i != size-1) {
+                sb.append(",");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 }
