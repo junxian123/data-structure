@@ -2,35 +2,53 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-//        Integer[] arr = new Integer[0];
-        Array<Integer> arr = new Array<>(0);
-//        List<Integer> list = new ArrayList<>()
-//        Student s1 = new Student("Mike",100);
-//        Student s2 = new Student("John",60);
-//        arr.push(s1);
-//        arr.push(s2);
-//        System.out.println(arr.toString());
-//        arr.remove(1);
-//        System.out.println(arr.toString());
-//        for (int i = 0; i < 5; i++) {
-//            arr.add(i,i);
-//        }
-//        System.out.println(arr.toString());
-//        arr.pop();
-//        System.out.println(arr.toString());
-//        arr.pop();
-//        for (int i = 0; i < 11; i++) {
-//            arr.add(i,i);
-//        }
-//        System.out.println(arr.toString());
-//        System.out.println(arr.toString());
-//        arr.push(100);
-//        System.out.println(arr.toString());
-//        arr.unshift(200);
-//        System.out.println(arr.toString());
-//        arr.pop();
-//        arr.remove(1);
-//        System.out.println(arr.contains(2300));
+
+        Array<Integer> arr = new Array<>(10);
+
+        System.out.println("---test add/push/unshift---");
+        // test add
+        for (int i = 0; i < 4; i++) {
+            arr.push(i);
+        }
+        System.out.println(arr.toString());
+        // test push
+        arr.push(4);
+        System.out.println(arr.toString());
+        // test unshift
+        arr.unshift(5);
+        System.out.println(arr.toString());
+
+        System.out.println("---test remove/pop/shift---");
+        // test remove
+        arr.remove(0);
+        System.out.println(arr.toString());
+        // test pop
+        arr.pop();
+        System.out.println(arr.toString());
+        // test shift
+        arr.shift();
+        System.out.println(arr.toString());
+
+        // test set
+        System.out.println("---test set---");
+        arr.set(0,10);
+        System.out.println(arr.toString());
+        // test get
+        System.out.println("---test get---");
+        Integer e = arr.get(0);
+        System.out.println(e);
+        // test contains
+        System.out.println("---test contains---");
+        boolean isContains = arr.contains(11111);
+        System.out.println(isContains);
+        isContains = arr.contains(10);
+        System.out.println(isContains);
+        // test 动态数组
+        System.out.println("原数组:"+arr.toString());
+        for (int i = 10; i < 20; i++) {
+            arr.push(i);
+        }
+        System.out.println("动态改变后数组:"+arr.toString());
 
     }
 }

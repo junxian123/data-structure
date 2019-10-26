@@ -12,6 +12,7 @@ public class Array<E> {
         }
         data = (E[])new Object[capacity];
         size = 0;
+        System.out.println(data);
     }
 
     public Array() {
@@ -105,11 +106,13 @@ public class Array<E> {
      * @param index
      * @param e
      */
-    public void set(int index,E e){
-        if(index<0 || index>size) {
+    public E set(int index,E e){
+        if(index<0 || index>=size) {
             throw new IllegalArgumentException("set failed. the index illegal");
         }
+        E res = this.data[index];
         data[index] = e;
+        return res;
     }
 
     /**
@@ -118,12 +121,7 @@ public class Array<E> {
      * @return
      */
     public boolean contains(E e){
-        for (int i = 0; i < size; i++) {
-            if(data[i].equals(e)){
-                return true;
-            }
-        }
-        return false;
+        return this.findIndex(e) !=-1 ? true : false;
     }
 
     /**
