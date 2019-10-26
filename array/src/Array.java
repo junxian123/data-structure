@@ -12,7 +12,6 @@ public class Array<E> {
         }
         data = (E[])new Object[capacity];
         size = 0;
-        System.out.println(data);
     }
 
     public Array() {
